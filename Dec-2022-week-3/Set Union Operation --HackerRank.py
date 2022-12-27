@@ -1,8 +1,7 @@
 # Enter your code here. Read input from STDIN. Print output to STDOUT
-e = int(input())
+
+n = int(input())
 english = set(input().split(" "))
-f = int(input())
+m = int(input())
 french = set(input().split(" "))
-
-print(len(english.difference(french)))
-
+print(len(english.union(french)))
