@@ -16,4 +16,3 @@ class Solution:
                 nums1[right] = nums2[two]
                 two -= 1
             right -= 1
-            # print(nums1)
