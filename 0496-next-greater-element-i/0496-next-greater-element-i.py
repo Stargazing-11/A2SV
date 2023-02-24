@@ -1,6 +1,6 @@
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        nextG = {}
+        nextG = defaultdict(lambda: -1)
         monStk = []
         
         for num in nums2:
@@ -10,10 +10,4 @@ class Solution:
                 nextG[monStk.pop()] = num
             monStk.append(num)
             
-        ans = []
-        for num in nums1:
-            if num in nextG:
-                ans.append(nextG[num])
-            else:
-                ans.append(-1)
-        return ans
+        return [nextG[num] for num in nums1]
