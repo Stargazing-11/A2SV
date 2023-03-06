@@ -7,7 +7,6 @@ class Solution:
         
         while left <= right:
             mid = (left + right) // 2
-            
             if nums[mid] > target:
                 right = mid-1
             elif nums[mid] == target:
@@ -15,14 +14,18 @@ class Solution:
                 found = True
             elif nums[mid] < target:
                 left = mid + 1
+                
         if not found:
             return [-1 ,-1]
         ans = [left, left]
+        left, right = 0, len(nums) - 1
         
-        for i in range(left + 1, len(nums)):
-            if nums[i] == target:
-                ans[-1] = i
-            else:
-                break
-        return ans
+        while left <= right:
+            mid = (left + right) // 2
+            if nums[mid] > target:
+                right = mid-1
+                found = True
+            elif nums[mid] <= target:
+                left = mid + 1
+        return [ans[0], right]
         
