@@ -7,11 +7,13 @@ class TopVotedCandidate:
         count[persons[0]] = 1
         self.mostelected = [persons[0]]
         big = [persons[0], 1]
+        
         for person in persons[1:]:
             count[person] += 1
             if big[1] == count[person] or count[person] > big[1]:
                 big = [person, count[person]]
             self.mostelected.append(big[0])
+            
     def q(self, t: int) -> int:
         
         left, right = 0, len(self.times)-1
