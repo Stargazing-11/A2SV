@@ -1,6 +1,6 @@
 class Solution:
     def PredictTheWinner(self, nums: List[int]) -> bool:
-        @cache
+        @lru_cache(None)
         def predict(l, r):
             if l > r:
                 return 0
