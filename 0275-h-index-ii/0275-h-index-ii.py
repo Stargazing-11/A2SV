@@ -1,9 +1,5 @@
 class Solution:
     def hIndex(self, citations: List[int]) -> int:
-        if len(citations) == 1:
-            if citations[0] == 0:
-                return 0
-            return 1
         
         N = len(citations)
         left, right = 0, len(citations) - 1
