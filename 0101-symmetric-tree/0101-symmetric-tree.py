@@ -7,15 +7,15 @@
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         
-        def check(root1, root2):
-            if not root2 and root1:
+        def checkSymmetry(root1, root2):
+            if root1 and not root2 or root2 and not root1:
                 return False
-            if not root1 and root2:
+            
+            if root1 and root2 and root1.val != root2.val:
                 return False
             if not root1 and not root2:
                 return True
-            if root1.val != root2.val:
-                return False
             
-            return check(root1.left, root2.right)and check(root1.right, root2.left)
-        return check(root.left,root.right)
+            return checkSymmetry(root1.left, root2.right) and checkSymmetry(root1.right, root2.left)
+        
+        return checkSymmetry(root.left, root.right)
