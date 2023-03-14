@@ -6,16 +6,20 @@
 #         self.right = right
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        levels = defaultdict(list)
+        level_store = defaultdict(list)
         
-        def levelTraversal(root, level):
-            if not root:
-                return 
+        stk = []
+        cur = root
+        level = 0
+        while stk or cur:
+            while cur:
+                stk.append((cur, level))
+                cur = cur.left
+                level += 1
+            node, lvl = stk.pop()
+            level_store[lvl].append(node.val)
             
-            levels[level].append(root.val)
-            
-            levelTraversal(root.left, level+1)
-            levelTraversal(root.right, level+1)
-        
-        levelTraversal(root, 0)
-        return levels.values()
+            if node.right:
+                level = lvl + 1
+                cur = node.right
+        return [level_store[key] for key in sorted(level_store.keys())]
