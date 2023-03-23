@@ -5,13 +5,11 @@ class Solution:
             return False
         
         def backtrack(cur, s):
-            if len(s) == 1:
-                if len(s) == 1 and cur - int(s) == 1:
+            if len(s) == 1 and cur - int(s) == 1 or len(s) == 0:
                     return True
-                else:
-                    return False
-            if len(s) == 0:
-                return True
+            elif len(s) <= 1:
+                return False
+
             newcur = 0
             ans = False
             for i in range(len(s)):
@@ -22,8 +20,8 @@ class Solution:
                     return False
                 if ans:
                     break
-                
             return ans
+        
         first = 0
         for i in range(len(s) - 1):
             first = (first*10) + int(s[i])
