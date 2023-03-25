@@ -10,30 +10,36 @@ class Solution:
         prefix_freq = {0:1}
         paths = []
         prefix = 0
-        def path(root, cur):
+        
+        def calculatePrefix(value):
             nonlocal prefix
             nonlocal count
-            if not root:
-                return 
-            # print(prefix_freq, cur, prefix, count)
-            cur.append(root.val)
-            prefix += root.val
+            prefix += value
             if prefix - targetSum in prefix_freq:
                 count += prefix_freq[prefix - targetSum]
             prefix_freq[prefix] = prefix_freq.get(prefix,0) + 1
             
-            # print(prefix_freq, cur, prefix, count)
+        def removePrefix(value, num):
+            nonlocal prefix
+            prefix_freq[prefix] -= 1
+            prefix -= num
             
+            
+        def path(root, cur):
+            if not root:
+                return 
+            cur.append(root.val)
+            calculatePrefix(root.val)
+           
             if not root.left and not root.right:
                 return 
+            
             if root.left:
                 path(root.left, cur)
-                prefix_freq[prefix] -= 1
-                prefix -= cur.pop()
+                removePrefix(prefix, cur.pop())
             if root.right:
                 path(root.right, cur)
-                prefix_freq[prefix] -= 1
-                prefix -= cur.pop()
-            return 
+                removePrefix(prefix, cur.pop())
+            
         path(root, [])
         return count
