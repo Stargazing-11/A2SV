@@ -2,7 +2,6 @@ class Solution:
     def missingNumber(self, nums: List[int]) -> int:
         nums.append(-1)        
         index = 0
-        count = 0
         while index < len(nums):
             correct_position = nums[index]
             if nums[index] != -1 and correct_position != index:
