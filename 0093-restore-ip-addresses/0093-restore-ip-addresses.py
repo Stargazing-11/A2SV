@@ -1,27 +1,29 @@
 class Solution:
     def restoreIpAddresses(self, s: str) -> List[str]:
         output = []
-        def backtrack(cur, nxt):
-            if len(cur) == 4 and nxt < len(s):
-                return
-            elif len(cur) == 4 and nxt >= len(s):
-                output.append(".".join(cur))
-                return 
+        
+        def validate(start, end):
+            if int(s[start:end]) <= 255:
+                if len(s[start:end]) > 1 and s[start] != "0" or len(s[start:end]) == 1:
+                    return True
+            return False
             
-            for i in range(nxt, len(s)):
-                if int(s[nxt:i+1]) <= 255:
-                    if len(s[nxt:i+1]) > 1 and s[nxt] == "0":
-                        return 
-                    cur.append(s[nxt:i+1])
-                    backtrack(cur, i+1)
+        def backtrack(cur, start):
+            if len(cur) == 4:
+                if start >= len(s):
+                    output.append(".".join(cur))
+                return
+
+            for idx in range(start, len(s)):
+                if validate(start, idx+1):
+                    cur.append(s[start:idx+1])
+                    backtrack(cur, idx+1)
                     cur.pop()
-                elif int(s[:i+1]) > 255:
-                    return
+                else:
+                    return 
             return 
     
-        for i in range(len(s)):
-            if int(s[:i+1]) <= 255: 
-                if len(s[:i+1]) > 1 and s[0] == "0":
-                    break
-                backtrack([s[:i+1]], i+1)
+        for idx in range(len(s)):
+            if validate(0, idx+1):
+                backtrack([s[:idx+1]], idx + 1)
         return output
