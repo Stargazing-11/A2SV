@@ -1,40 +1,42 @@
 class Solution:
     def reversePairs(self, nums: List[int]) -> int:
         count = [0]
+        
         def counter(left, right):
-            l_ptr, r_ptr = 0, 0
+            left_ptr, right_ptr = 0, 0
             temp, cond = 0, False
             new = 0
-            while l_ptr < len(left) and r_ptr < len(right):
+            
+            while left_ptr < len(left) and right_ptr < len(right):
                 if cond:
                     temp += new
-                if left[l_ptr] > right[r_ptr] * 2:
+                if left[left_ptr] > right[right_ptr] * 2:
                     new += 1
-                    r_ptr += 1
+                    right_ptr += 1
                     cond = False
                 else:
-                    l_ptr += 1
+                    left_ptr += 1
                     cond = True
-            add = (len(left)-l_ptr) * new if (len(left)-l_ptr) > 0 else new
+            
+            add = (len(left)-left_ptr) * new if (len(left)-left_ptr) > 0 else new
             temp += add
             return temp
-        
+            
         def merge(left, right, count):    
             count[0] += counter(left, right)
-            l_ptr, r_ptr = 0, 0
+            left_ptr, right_ptr = 0, 0
             temp = []
-            while l_ptr < len(left) and r_ptr < len(right):
-                if left[l_ptr] < right[r_ptr]:
-                    temp.append(left[l_ptr])
-                    l_ptr += 1
+            while left_ptr < len(left) and right_ptr < len(right):
+                if left[left_ptr] < right[right_ptr]:
+                    temp.append(left[left_ptr])
+                    left_ptr += 1
                 else:
-                    temp.append(right[r_ptr])
-                    r_ptr += 1
-            
-            if l_ptr < len(left):
-                temp.extend(left[l_ptr:])
-            if r_ptr < len(right):
-                temp.extend(right[r_ptr:])        
+                    temp.append(right[right_ptr])
+                    right_ptr += 1
+            if left_ptr < len(left):
+                temp.extend(left[left_ptr:])
+            if right_ptr < len(right):
+                temp.extend(right[right_ptr:])        
             return temp
             
         
@@ -42,7 +44,6 @@ class Solution:
             if len(nums) <= 1:
                 return nums
             mid = len(nums) // 2
-            
             left = merge_sort(nums[:mid], count)
             right = merge_sort(nums[mid:], count)
             
