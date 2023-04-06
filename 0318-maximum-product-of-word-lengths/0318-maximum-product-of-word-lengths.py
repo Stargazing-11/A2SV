@@ -5,8 +5,8 @@ class Solution:
         
         for word in words:
             bit = 0
-            for char in word:
-                bit = bit | (1 << (ord(char) - ord("a")))
+            for char in set(word):
+                bit += (1 << (ord(char) - ord("a")))
             bits.append(bit)
             
         max_prod = 0
