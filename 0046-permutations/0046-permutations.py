@@ -7,17 +7,17 @@ class Solution:
                 return 
             
             for i in range(len(nums)):
-                if nums[i] in curSet:
+                if curSet & (1<<i):
                     continue
-                curSet.add(nums[i])
+                curSet = curSet | (1<<i)
                 cur.append(nums[i])
                 backtrack(curSet, cur)
-                curSet.remove(nums[i])
+                curSet = curSet & ~(1<<i)
                 cur.pop()
                 
-        curSet = set()
+        curSet = 0
         for i in range(len(nums)):
-            curSet.clear()
-            curSet.add(nums[i])
+            curSet = 0
+            curSet = curSet | (1<<i)
             backtrack(curSet, [nums[i]])
         return output
