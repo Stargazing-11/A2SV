@@ -7,10 +7,10 @@ class Solution:
             graph[vert].append(hate)
             graph[hate].append(vert)
             
-        colors = [1 for i in range(n)]
+        colors = [0 for i in range(n)]
         
         def dfs(vertex, color):
-            if colors[vertex-1] != 1:
+            if colors[vertex-1] != 0:
                 if colors[vertex-1] != color:
                     return False
                 return True
@@ -18,14 +18,14 @@ class Solution:
             colors[vertex-1] = color
             
             for neighbor in graph[vertex]:
-                ans = dfs(neighbor, (color + 1) * (-1))
+                ans = dfs(neighbor, -(color))
                 if ans == False:
                     return False
             return True
 
         for i in range(1, n+1):
-            if colors[i-1] == 1:
-                ans = dfs(i, 0)
+            if colors[i-1] == 0:
+                ans = dfs(i, -1)
                 if ans == False:
                     return False
         return True
