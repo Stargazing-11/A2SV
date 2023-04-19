@@ -14,6 +14,7 @@ class Solution:
                 i += 1
 
             return [i for i in range(n+1) if is_prime[i]==True]
+        
         primes = prime_sieve(n)
         oprs = 0
         i = 0
