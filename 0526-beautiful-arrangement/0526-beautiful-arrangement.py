@@ -1,23 +1,22 @@
 class Solution:
     def countArrangement(self, n: int) -> int:                      
         count = [0]
-        visited = set()
+        visited = 0
         def backtrack(pos):
+            nonlocal visited
             if pos > n:
                 count[0] += 1
                 return     
             for i in range(1, n+1):
-                if i in visited or not ((i%pos) == 0 or (pos % i) == 0):
+                if visited & (1<<(i-1)) or not ((i%pos) == 0 or (pos % i) == 0):
                     continue
-                visited.add(i)
+                visited = visited | (1 << (i-1))
                 backtrack(pos+1)
-                visited.remove(i)
-            
+                visited = visited & ~(1<<(i-1))            
             return
         
         for i in range(1, n+1):
-            visited.clear()
-            visited.add(i)
+            visited = (1<<(i-1))
             backtrack(2)
         return count[0]
                 
