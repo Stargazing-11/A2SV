@@ -7,12 +7,9 @@ class Solution:
             graph[a].append(b)            
             graph[b].append(a)
 
-            indegree[a] += 1
-            indegree[b] += 1
-
         first_child = None
-        for key in indegree.keys():
-            if indegree[key] == 1:
+        for key in graph.keys():
+            if len(graph[key]) == 1:
                 first_child = key
                 break
         visited = set()
