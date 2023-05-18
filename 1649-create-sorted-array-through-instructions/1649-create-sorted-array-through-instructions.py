@@ -9,7 +9,7 @@ class Solution:
             
             cost += min(left, right)
             
-            cost %= 10**9 + 7
+#             cost %= 10**9 + 7
             bisect.insort(ans, num)
         
-        return cost
+        return cost % (10 ** 9 + 7)
