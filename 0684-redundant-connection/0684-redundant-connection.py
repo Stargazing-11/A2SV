@@ -9,7 +9,12 @@ class Solution:
             while root != parents[root]:
                 root = parents[root]
             
-            # parent = 
+            while node != parents[node]:
+                temp = parents[node]
+                parents[node] = root
+                node = temp
+            
+
             
             return root
         
