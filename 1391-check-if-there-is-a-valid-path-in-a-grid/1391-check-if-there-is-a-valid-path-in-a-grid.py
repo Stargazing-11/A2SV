@@ -1,5 +1,28 @@
 class Solution:
     def hasValidPath(self, grid: List[List[int]]) -> bool:
+
+        parents = {(i,j):(i,j) for i in range(len(grid)) for j in range(len(grid[0]))}        
+        rank = {(i,j): 1 for i in range(len(grid)) for j in range(len(grid[0]))}
+        
+        def find(node):
+            root = node
+            while root != parents[root]:
+                root = parents[root]
+            
+            while node != parents[node]:
+                temp = parents[node]
+                parents[node] = root
+                node = temp
+            return root
+        
+        def union(node1, node2):
+            p1, p2 = find(node1), find(node2)
+            
+            if rank[node1] < rank[node2]:
+                p1, p2 = p2, p1
+            
+            parents[p2] = p1
+            rank[p1] += rank[p2]
         
         directions = defaultdict(set)
         
@@ -20,24 +43,18 @@ class Solution:
         def inBound(r, c):
             return 0 <= r < len(grid) and 0 <= c < len(grid[0])
         
-        visited = set()
-        def dfs(node):
-            visited.add(node)
-            row, col = node
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                (row1, col1), (row2, col2) = directions[grid[i][j]]
 
-            for r, c in directions[grid[row][col]]:
-                new_row, new_col = r + row, c + col
-                
-                if inBound(new_row, new_col) and (new_row, new_col) not in visited: 
+                if inBound(i + row1, j + col1) and (-row1, -col1) in directions[grid[i+row1][j+col1]]:
+                    union((i,j), (i+row1, j+col1))
 
-                    if (r * -1, c * -1) in directions[grid[new_row][new_col]]:
-                        dfs((new_row, new_col))
-            
-        dfs((0, 0))
+                if inBound(i + row2, j + col2) and (-row2, -col2) in directions[grid[i+row2][j+col2]]:
+                    union((i,j), (i+row2, j+col2))
+
         
-        if (len(grid)-1, len(grid[0])-1) in visited:
-            return True
-        return False
+        return find((0,0)) == find((len(grid)-1, len(grid[0])-1))
         
                     
                     
