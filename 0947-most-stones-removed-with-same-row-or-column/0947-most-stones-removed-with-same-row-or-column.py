@@ -1,17 +1,6 @@
 class Solution:
     def removeStones(self, stones: List[List[int]]) -> int:
-        row_len = float('-inf')
-        col_len = float('-inf')
-        for i, j in stones:
-            row_len = max(row_len, i)
-            col_len = max(col_len, j)
-
         parents = {}
-            
-        for i, j in stones:
-            parents[i] = i
-            parents[j + row_len + 1] = j + row_len + 1 
-        
         
         def find(node):
             root = node
@@ -25,12 +14,18 @@ class Solution:
             return root
         
         def union(node1, node2):
+            if node1 not in parents:
+                parents[node1] = node1
+            
+            if node2 not in parents:
+                parents[node2] = node2
+            
             p1, p2 = find(node1), find(node2)
             parents[p2] = p1
             
         
-        for i, j in stones:
-            union(i, j + row_len + 1)
+        for node1, node2 in stones:
+            union(node1, -node2-1)
         
         roots = set()
         
